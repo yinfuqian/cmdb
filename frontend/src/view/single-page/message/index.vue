@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <Card shadow>
     <div>
       <div class="message-page-con message-category-con">
@@ -191,4 +191,4 @@ export default {
     }
   }
 }
-</style>
+</style> -->

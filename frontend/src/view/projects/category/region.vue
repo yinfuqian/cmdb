@@ -14,7 +14,7 @@
       <Card>
       <Row>
         <Col span="4">
-          <Input search v-model="getParams.search" placeholder="机房名/地址" @on-search="handleGetList" />
+          <Input search v-model="getParams.search" placeholder="搜索" @on-search="handleGetList" />
         </Col>
 
         <Col span="10">
@@ -31,7 +31,6 @@
       </Row>
       </br>
       <Page :total=total show-sizer :current=getParams.page @on-change="pageChange" @on-page-size-change="sizeChange"></Page>
-
     </Card>
     <copyright> </copyright>
 
@@ -40,18 +39,15 @@
     <Modal
       v-model="createModal"
       width="500"
-      title="创建机房"
+      title="创建地域"
       @on-ok="handleCreate"
       @on-cancel="cancel">
       <div>
         <Row>
           <Col span="22">
             <Form ref="createForm" :model="createForm" :rules="ruleForm" :label-width="100">
-              <FormItem label="产品类型" prop="name">
-                <Input v-model="createForm.name" placeholder="产品类型"></Input>
-              </FormItem>
-              <FormItem label="地址：" prop="address">
-                <Input v-model="createForm.address" placeholder="腾讯云"></Input>
+              <FormItem label="地域名" prop="name" >
+                <Input v-model="createForm.name" placeholder="东区"></Input>
               </FormItem>
               <FormItem label="备注：" prop="remark">
                 <Input v-model="createForm.remark" placeholder="备注"></Input>
@@ -65,18 +61,15 @@
     <Modal
       v-model="updateModal"
       width="500"
-      title="修改产品类型"
+      title="修改地域"
       @on-ok="handleUpdate"
       @on-cancel="cancel">
       <div>
         <Row>
           <Col span="22">
             <Form ref="updateForm" :model="updateForm" :rules="ruleForm" :label-width="100">
-              <FormItem label="产品类型：" prop="host">
-                <Input v-model="updateForm.name" placeholder="个人开发"></Input>
-              </FormItem>
-              <FormItem label="所属产品线：" prop="port">
-                <Input v-model="updateForm.address" placeholder="腾讯云"></Input>
+              <FormItem label="地域名" prop="name">
+                <Input v-model="updateForm.name" placeholder="地域名"></Input>
               </FormItem>
               <FormItem label="备注：">
                 <Input v-model="updateForm.remark"></Input>
@@ -85,16 +78,26 @@
           </Col>
         </Row>
       </div>
+
     </Modal>
 
     <Modal
       v-model="deleteModal"
       width="450"
-      title="产品类型"
+      title="删除地域"
       @on-ok="handleDelete"
       @on-cancel="cancel">
       <div>
-        <p>确认删除产品类型 {{deleteData.name}} ?</p>
+        <p>确认删除地域 {{deleteData.name}} ?</p>
+      </div>
+    </Modal>
+
+    <Modal
+      v-model="showProject.modal"
+      width="450"
+      :title="showProject.title">
+      <div class="modalcontent">
+        <Table :columns="columnsProjectList" :data="showProject.data" size="small"></Table>
       </div>
     </Modal>
 
@@ -103,8 +106,8 @@
 <script>
   import copyright from '@/view/components/public/copyright.vue'
   import {Button, Table, Modal, Message, Tag} from 'iview';
-  import {GetIdcList, CreateIdc, UpdateIdc, DeleteIdc} from '@/api/category/idcs'
-  import {alertWarning} from '@/libs/view/common'
+  import {GetBusinessLineList, CreateBusinessLine, UpdateBusinessLine, DeleteBusinessLine} from '@/api/category/businesslines'
+  import {GetUserList} from '@/api/account/users'
 
   export default {
     components: {copyright},
@@ -114,50 +117,82 @@
       deleteModal:false,
       createModal:false,
       updateModal:false,
+      userList:[],
       search:'',
       dataList:[],
+      showProject:{
+        modal:false,
+        title:'',
+        data:[]
+      },
       deleteData:{
         id:'',
         name:''
       },
       createForm:{
-        name: '',
-        address: '',
-        remark: ''
+        name:'',
+        remark:''
       },
       updateForm:{
         id:'',
         name:'',
-        address:'',
         remark:''
       },
       ruleForm: {
-        name: [{ required: true, message: '产品类型不能为空', trigger: 'blur' }],
-        address: [{ required: true, message: '产品类型不能为空', trigger: 'blur' }],
+        name: [{ required: true, message: '地域名不能为空', trigger: 'blur' }],
       },
+    //   columnsProjectList:[
+    //     {
+    //       title: 'ID',
+    //       width: 80,
+    //       render: (h, params) => {
+    //         return h('router-link', {props:{to:'/category/projects/'+params.row.id}}, params.row.id)
+    //       }
+    //     },
+    //     {
+    //       title: '项目名',
+    //       key: 'name'
+    //     }
+    //   ],
       columnsDataList: [
         {
           title: 'ID',
           width: 80,
-          render: (h, params) => {
-            return h('router-link', {props:{to:'/category/idcs/'+params.row.id}}, params.row.id)
-          }
+          key: 'id'
         },
         {
-          title: '产品类型',
+          title: '云厂商',
           key: 'name'
         },
-        {
-          title: '项目数',
-          render: (h, params) => {
-            let row = params.row
-            return h('div', [h('span',{props:{}}, row.racks.length)])
-          }
-        },
-        {
-          title: '地址',
-          key: 'address'
-        },
+        // {
+        //   title: '项目列表',
+        //   render: (h, params) => {
+        //     let data = params.row.projects
+        //     if (data.length == 0) {
+        //       var subelm = []
+        //     } else {
+        //       var subelm = [
+        //         h(Button, {
+        //             props: {
+        //               type: 'info',
+        //               size: 'small'
+        //             },
+        //             style: {
+        //               marginRight: '12px'
+        //             },
+        //             on: {
+        //               click: () => {
+        //                 this.showProject.modal = true
+        //                 this.showProject.title = params.row.name + '云厂商'
+        //                 this.showProject.data = data
+        //               }
+        //             }
+        //         }, '详情' + ' (' + data.length + ')')
+        //       ]
+        //     }
+        //     return h('div', {}, subelm)
+        //   }
+        // },
         {
           title: '备注',
           key: 'remark'
@@ -183,7 +218,11 @@
                       this.updateModal = true
                       this.updateForm.id = row.id
                       this.updateForm.name = row.name
-                      this.updateForm.address = row.address
+                      let users = []
+                      for (let item of row.users) {
+                        users.push(item.id)
+                      }
+                      this.updateForm.users = users
                       this.updateForm.remark = row.remark
                     }
                   }
@@ -211,21 +250,36 @@
         pagesize:10,
         search:'',
       },
+      getMaxParams:{
+        page:1,
+        pagesize:1000,
+        search:'',
+      }
       }
     },
 
     created () {
       this.handleGetList()
+      this.handleGetListUsers()
     },
 
     methods: {
 
       handleGetList () {
-        GetIdcList(this.getParams)
+        GetBusinessLineList(this.getParams)
         .then(
           res => {
             this.dataList = res.data.results
             this.total = res.data.count
+          }
+        )
+      },
+
+      handleGetListUsers () {
+        GetUserList(this.getMaxParams)
+        .then(
+          res => {
+            this.userList = res.data.results
           }
         )
       },
@@ -246,11 +300,10 @@
             return
           }
           let data = this.createForm
-          CreateIdc(data)
+          CreateBusinessLine(data)
           .then(
             res => {
               this.handleGetList()
-              alertWarning('create', this.$Notice, data.name)
             },
           )
         })
@@ -263,11 +316,10 @@
           }
           let id = this.updateForm.id
           let data = this.updateForm
-          UpdateIdc(id, data)
+          UpdateBusinessLine(id, data)
           .then(
             res => {
               this.handleGetList()
-              alertWarning('update', this.$Notice, id)
             }
           )
         })
@@ -275,10 +327,9 @@
 
       handleDelete () {
         let id = this.deleteData.id
-        DeleteIdc(id)
+        DeleteBusinessLine(id)
         .then (res => {
           this.handleGetList()
-          alertWarning('delete', this.$Notice, id)
         })
       },
 

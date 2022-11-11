@@ -14,7 +14,7 @@
       <Card>
       <Row>
         <Col span="4">
-          <Input search v-model="getParams.search" placeholder="机柜名" @on-search="handleGetList" />
+          <Input search v-model="getParams.search" placeholder="业务类型名" @on-search="handleGetList" />
         </Col>
 
         <Col span="10">
@@ -40,27 +40,27 @@
     <Modal
       v-model="createModal"
       width="500"
-      title="创建机柜"
+      title="创建业务"
       @on-ok="handleCreate"
       @on-cancel="cancel">
       <div>
         <Row>
           <Col span="22">
             <Form ref="createForm" :model="createForm" :rules="ruleForm" :label-width="100">
-              <FormItem label="选择机房：">
+              <FormItem label="选择产品类型：">
                 <Select v-model="createForm.idc">
                   <Option v-for="item in idcList" :value="item.id" :key="item.id">{{ item.name }}</Option>
                 </Select>
               </FormItem>
-              <FormItem label="机柜名：" prop="name">
-                <Input v-model="createForm.name" placeholder="机柜"></Input>
+              <FormItem label="业务类型" prop="name">
+                <Input v-model="createForm.name" placeholder="新业务"></Input>
               </FormItem>
-              <FormItem label="编号：" prop="number">
-                <Input v-model="createForm.number" placeholder="编号"></Input>
+              <FormItem label="区域：" prop="region">
+                <Input v-model="createForm.region" placeholder="南区"></Input>
               </FormItem>
-              <FormItem label="U型：" prop="size">
+              <!-- <FormItem label="U型：" prop="size">
                 <Input v-model="createForm.size" placeholder="U型"></Input>
-              </FormItem>
+              </FormItem> -->
               <FormItem label="备注：" prop="remark">
                 <Input v-model="createForm.remark" placeholder="备注"></Input>
               </FormItem>
@@ -73,27 +73,27 @@
     <Modal
       v-model="updateModal"
       width="500"
-      title="修改机柜"
+      title="修改业务类型"
       @on-ok="handleUpdate"
       @on-cancel="cancel">
       <div>
         <Row>
           <Col span="22">
             <Form ref="updateForm" :model="updateForm" :rules="ruleForm" :label-width="100">
-              <FormItem label="所属机房：">
+              <FormItem label="产品类型：">
                 <Select v-model="updateForm.idc">
                   <Option v-for="item in idcList" :value="item.id" :key="item.id">{{ item.name }}</Option>
                 </Select>
               </FormItem>
-              <FormItem label="机柜名：" prop="name">
-                <Input v-model="updateForm.name" placeholder="机柜名"></Input>
+              <FormItem label="业务类型：" prop="name">
+                <Input v-model="updateForm.name" placeholder="业务类型"></Input>
               </FormItem>
-              <FormItem label="编号：" prop="number">
-                <Input v-model="updateForm.number" placeholder="编号"></Input>
+              <FormItem label="区域：" prop="region">
+                <Input v-model="updateForm.region" placeholder="东区"></Input>
               </FormItem>
-              <FormItem label="U型：" prop="size">
+              <!-- <FormItem label="U型：" prop="size">
                 <Input v-model="updateForm.size" placeholder="U型"></Input>
-              </FormItem>
+              </FormItem> -->
               <FormItem label="备注：">
                 <Input v-model="updateForm.remark"></Input>
               </FormItem>
@@ -106,11 +106,11 @@
     <Modal
       v-model="deleteModal"
       width="450"
-      title="删除机柜"
+      title="删除业务类型"
       @on-ok="handleDelete"
       @on-cancel="cancel">
       <div>
-        <p>确认删除机柜 {{deleteData.name}} ?</p>
+        <p>确认删除业务类型 {{deleteData.name}} ?</p>
       </div>
     </Modal>
 
@@ -136,6 +136,7 @@
       search:'',
       idcList:[],
       dataList:[],
+      regionList:[],
       deleteData:{
         id:'',
         name:''
@@ -144,7 +145,7 @@
         idc:'',
         name:'',
         number:'',
-        size:'',
+        region:'',
         remark:''
       },
       updateForm:{
@@ -152,13 +153,13 @@
         name:'',
         idc:'',
         number:'',
-        size:'',
+        region:'',
         remark:''
       },
       ruleForm: {
-        name: [{ required: true, message: '机柜名不能为空', trigger: 'blur' }],
-        number: [{ required: true, message: '机柜编号不能为空', trigger: 'blur' }],
-        size: [{ required: true, message: '机柜型号不能为空', trigger: 'blur' }]
+        name: [{ required: true, message: '业务类型名不能为空', trigger: 'blur' }],
+       // region: [{ required: true, message: '业务类型区域不能为空', trigger: 'blur' }]
+        // size: [{ required: true, message: '机柜型号不能为空', trigger: 'blur' }]
       },
       columnsDataList: [
         {
@@ -169,11 +170,11 @@
           }
         },
         {
-          title: '机柜名',
+          title: '业务类型',
           key: 'name'
         },
         {
-          title: '所属机房',
+          title: '所属产品',
           key: 'idc_name'
         },
         {
@@ -185,14 +186,14 @@
           }
         },
         {
-          title: 'U型',
-          key: 'size',
+          title: '区域',
+          key: 'region',
           width: 80
         },
-        {
-          title: '编号',
-          key: 'number'
-        },
+        // {
+        //   title: '编号',
+        //   key: 'number'
+        // },
         {
           title: '备注',
           key: 'remark'
@@ -220,7 +221,7 @@
                       this.updateForm.name = row.name
                       this.updateForm.idc = row.idc
                       this.updateForm.number = row.number
-                      this.updateForm.size = row.size
+                      this.updateForm.region = row.region
                       this.updateForm.remark = row.remark
                     }
                   }

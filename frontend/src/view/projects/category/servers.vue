@@ -47,17 +47,17 @@
         <Row>
           <Col span="22">
             <Form ref="createForm" :model="createForm" :rules="ruleForm" :label-width="100">
-              <FormItem label="选择机房：">
+              <FormItem label="选择产品类型：">
                 <Select v-model="createForm.idc"  @on-change="handleGetListRacks(createForm.idc)">
                   <Option v-for="item in idcList" :value="item.id" :key="item.id">{{ item.name }}</Option>
                 </Select>
               </FormItem>
-              <FormItem label="选择机柜：">
+              <FormItem label="选择业务类型：">
                 <Select v-model="createForm.rack">
                   <Option v-for="item in rackList" :value="item.id" :key="item.id">{{ item.name }}</Option>
                 </Select>
               </FormItem>
-              <FormItem label="业务用户：">
+              <FormItem label="责任用户：">
                 <Select v-model="createForm.users" multiple>
                   <Option v-for="item in userList" :value="item.id" :key="item.id">{{ item.username }}</Option>
                 </Select>
@@ -92,17 +92,22 @@
         <Row>
           <Col span="22">
             <Form ref="updateForm" :model="updateForm" :rules="ruleForm" :label-width="100">
-              <FormItem label="所属机房：">
+              <FormItem label="所属产品类型：">
                 <Select v-model="updateForm.idc" @on-change="handleGetListRacks(updateForm.idc)">
                   <Option v-for="item in idcList" :value="item.id" :key="item.id">{{ item.name }}</Option>
                 </Select>
               </FormItem>
-              <FormItem label="所属机柜：">
+              <FormItem label="所属业务：">
                 <Select v-model="updateForm.rack">
                   <Option v-for="item in rackList" :value="item.id" :key="item.id">{{ item.name }}</Option>
                 </Select>
               </FormItem>
-              <FormItem label="业务用户：">
+              <FormItem label="所属区域：">
+                <Select v-model="updateForm.rack">
+                  <Option v-for="item in regionList" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                </Select>
+              </FormItem>
+              <FormItem label="责任用户：">
                 <Select v-model="updateForm.users" multiple>
                   <Option v-for="item in userList" :value="item.id" :key="item.id">{{ item.username }}</Option>
                 </Select>
@@ -230,13 +235,17 @@
           width: 120,
         },
         {
-          title: '所属机柜',
+          title: '所属业务类型',
           key: 'rack_name',
           width: 100,
         },
         {
           title: '服务器类型',
           key: 'system_product'
+        },
+        {
+          title: '区域',
+          key: 'region'
         },
         {
           title: '状态',

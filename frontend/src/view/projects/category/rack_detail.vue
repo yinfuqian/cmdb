@@ -1,13 +1,12 @@
 <style scoped>
 </style>
-
 <template>
   <div>
     <Row>
     <Col span="12">
       <Card>
         <Tabs>
-          <TabPane label="基本信息（机柜）"></TabPane>
+          <TabPane label="基本信息(业务类型)"></TabPane>
         </Tabs>
         <div style="margin-top:10px;margin-bottom:10px">
           <Row>
@@ -20,20 +19,22 @@
           </Row>
           <Row>
             <Col span="4">
-              <p> <b>机柜名：</b> </p>
+              <p> <b>业务类型名</b> </p>
             </Col>
             <Col span="20">
               <p> {{row.name}} </p>
             </Col>
           </Row>
+
           <Row>
             <Col span="4">
-              <p> <b>归属机房：</b> </p>
+              <p> <b>归属业务类型</b> </p>
             </Col>
             <Col span="20">
               <p><router-link :to="get_idc_url">{{row.idc_name}}</router-link></p>
             </Col>
           </Row>
+
           <Row>
             <Col span="4">
               <p> <b>服务器数：</b> </p>
@@ -42,22 +43,25 @@
               <p> {{get_servers_length}} </p>
             </Col>
           </Row>
+
           <Row>
             <Col span="4">
-              <p> <b>编号：</b> </p>
+              <p> <b>区域：</b> </p>
             </Col>
             <Col span="20">
-              <p> {{row.number}} </p>
+              <!-- <p><router-link :to="get_region_url">{{row.region_name}}</router-link></p> -->
+              <p> {{row.region}} </p>
             </Col>
           </Row>
-          <Row>
+          
+          <!-- <Row>
             <Col span="4">
               <p> <b>U型：</b> </p>
             </Col>
             <Col span="20">
               <p> {{row.size}} </p>
             </Col>
-          </Row>
+          </Row> -->
           <Row>
             <Col span="4">
               <p> <b>备注：</b> </p>
@@ -82,7 +86,6 @@
     </Col>
     </Row>
     <copyright> </copyright>
-
   </div>
 </template>
 
@@ -113,6 +116,11 @@ export default {
       let url = '/category/idcs/' + this.row.idc
       return url
     }
+
+    // get_region_url: function () {
+    //   let url = '/category/idcs/' + this.row.region_name
+    //   return url
+    // }
   },
   data () {
     return {

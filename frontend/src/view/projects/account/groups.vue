@@ -69,7 +69,7 @@
           <div v-for="item in showContent.data" :value="item.label" :key="item.label">
             <p v-if="item.role == 'developer'"> {{ item.name }} ( 研发 ) </p>
             <p v-else-if="item.role == 'developer_manager'"> {{ item.name }} ( 研发经理 ) </p>
-            <p v-else-if="item.role == 'developer_supremo'"> {{ item.name }} ( 研发总监 ) </p>
+            <p v-else-if="item.role == 'developer_supremo'"> {{ item.name }} ( 运维管理 ) </p>
             <p v-else> {{ item.label }} </p>
           </div>
         </div>

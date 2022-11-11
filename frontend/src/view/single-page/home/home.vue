@@ -32,7 +32,7 @@
 import InforCard from '_c/info-card'
 import CountTo from '_c/count-to'
 import { ChartPie, ChartBar } from '_c/charts'
-import Example from './example.vue'
+//import Example from './example.vue'
 import {GetDashBoardData} from '@/api/dashboard/dashboard_data'
 
 
@@ -43,7 +43,7 @@ export default {
     CountTo,
     ChartPie,
     ChartBar,
-    Example
+   // Example
   },
   data () {
     return {

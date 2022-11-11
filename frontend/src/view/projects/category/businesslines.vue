@@ -39,17 +39,17 @@
     <Modal
       v-model="createModal"
       width="500"
-      title="创建业务线"
+      title="创建云厂商"
       @on-ok="handleCreate"
       @on-cancel="cancel">
       <div>
         <Row>
           <Col span="22">
             <Form ref="createForm" :model="createForm" :rules="ruleForm" :label-width="100">
-              <FormItem label="业务线名：" prop="name">
-                <Input v-model="createForm.name" placeholder="机柜"></Input>
+              <FormItem label="云厂商" prop="name" >
+                <Input v-model="createForm.name" placeholder="云厂商"></Input>
               </FormItem>
-              <FormItem label="相关用户：">
+              <FormItem label="责任用户：">
                 <Select v-model="createForm.users" filterable multiple>
                   <Option v-for="item in userList" :value="item.id" :key="item.id">{{ item.username }}</Option>
                 </Select>
@@ -66,15 +66,15 @@
     <Modal
       v-model="updateModal"
       width="500"
-      title="修改业务线"
+      title="修改云厂商"
       @on-ok="handleUpdate"
       @on-cancel="cancel">
       <div>
         <Row>
           <Col span="22">
             <Form ref="updateForm" :model="updateForm" :rules="ruleForm" :label-width="100">
-              <FormItem label="业务线名：" prop="name">
-                <Input v-model="updateForm.name" placeholder="业务线名"></Input>
+              <FormItem label="云厂商" prop="name">
+                <Input v-model="updateForm.name" placeholder="云厂商名"></Input>
               </FormItem>
               <FormItem label="相关用户：">
                 <Select v-model="updateForm.users" filterable multiple>
@@ -94,11 +94,11 @@
     <Modal
       v-model="deleteModal"
       width="450"
-      title="删除业务线"
+      title="删除云厂商"
       @on-ok="handleDelete"
       @on-cancel="cancel">
       <div>
-        <p>确认删除业务线 {{deleteData.name}} ?</p>
+        <p>确认删除云厂商 {{deleteData.name}} ?</p>
       </div>
     </Modal>
 
@@ -151,7 +151,7 @@
         remark:''
       },
       ruleForm: {
-        name: [{ required: true, message: '业务线名不能为空', trigger: 'blur' }],
+        name: [{ required: true, message: '云厂商名不能为空', trigger: 'blur' }],
       },
       columnsProjectList:[
         {
@@ -173,7 +173,7 @@
           key: 'id'
         },
         {
-          title: '业务线名',
+          title: '云厂商',
           key: 'name'
         },
         {
@@ -195,7 +195,7 @@
                     on: {
                       click: () => {
                         this.showProject.modal = true
-                        this.showProject.title = params.row.name + ' 业务线'
+                        this.showProject.title = params.row.name + '云厂商'
                         this.showProject.data = data
                       }
                     }

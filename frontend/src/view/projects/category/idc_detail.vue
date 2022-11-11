@@ -7,7 +7,7 @@
     <Col span="12">
       <Card>
         <Tabs>
-          <TabPane label="基本信息（机房）"></TabPane>
+          <TabPane label="业务类型"></TabPane>
         </Tabs>
         <div style="margin-top:10px;margin-bottom:10px">
           <Row>
@@ -20,7 +20,7 @@
           </Row>
           <Row>
             <Col span="4">
-              <p> <b>机房名：</b> </p>
+              <p> <b>业务类型</b> </p>
             </Col>
             <Col span="20">
               <p> {{row.name}} </p>
@@ -28,7 +28,7 @@
           </Row>
           <Row>
             <Col span="4">
-              <p> <b>机柜数：</b> </p>
+              <p> <b>项目数</b> </p>
             </Col>
             <Col span="20">
               <p> {{get_racks_length}} </p>
@@ -36,7 +36,7 @@
           </Row>
           <Row>
             <Col span="4">
-              <p> <b>地址：</b> </p>
+              <p> <b>服务器数量</b> </p>
             </Col>
             <Col span="20">
               <p> {{row.address}} </p>
@@ -57,7 +57,7 @@
     <Col span="12">
       <Card>
         <Tabs>
-          <TabPane label="相关机柜"></TabPane>
+          <TabPane label="相关业务"></TabPane>
         </Tabs>
         <div style="margin-top:10px;margin-bottom:10px">
           <Table :columns="columnsRackList" :data="rackList" size="small"></Table>
@@ -106,7 +106,7 @@ export default {
           }
         },
         {
-          title: '机柜名',
+          title: '业务类型',
           key: 'name'
         }
       ]
@@ -121,8 +121,6 @@ export default {
           this.rackList = res.data.racks
         })
     },
-
   },
-
 }
 </script>

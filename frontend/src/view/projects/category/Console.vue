@@ -9,7 +9,8 @@ export default {
   props: {
     terminal: {
       type: Object,
-      default: {}
+      default: function () { return [] }
+      //default: {}
     }
   },
   data () {

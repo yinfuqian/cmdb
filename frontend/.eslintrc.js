@@ -13,7 +13,9 @@ module.exports = {
       'x-invalid-end-tag': false
     }],
     'no-undef': 'off',
-    'camelcase': 'off'
+    'camelcase': 'off',
+    	//缩进
+	  "indent": ["off", 2]
   },
   parserOptions: {
     parser: 'babel-eslint'
