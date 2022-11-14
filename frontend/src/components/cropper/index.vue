@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="cropper-wrapper">
     <div class="img-box">
       <img class="cropper-image" :id="imgId" alt="">
@@ -136,4 +136,4 @@ export default {
     })
   }
 }
-</script>
+</script> -->

@@ -23,13 +23,13 @@
           </center>
         </Col>
       </Row>
-      </br>
+      
       <Row>
         <Col span="24">
           <Table :columns="columnsDataList" :data="dataList" size="small"></Table>
         </Col>
       </Row>
-      </br>
+      
       <Page :total=total show-sizer :current=getParams.page @on-change="pageChange" @on-page-size-change="sizeChange"></Page>
     </Card>
     <copyright> </copyright>
@@ -46,9 +46,9 @@
         <Row>
           <Col span="22">
             <Form ref="createForm" :model="createForm" :rules="ruleForm" :label-width="100">
-              <FormItem label="地域名" prop="name" >
-                <Input v-model="createForm.name" placeholder="东区"></Input>
-              </FormItem>
+              <FormItem label="地域" prop="name" >
+                <Input v-model="createForm.name" placeholder="地域"></Input>
+              </FormItem>          
               <FormItem label="备注：" prop="remark">
                 <Input v-model="createForm.remark" placeholder="备注"></Input>
               </FormItem>
@@ -68,7 +68,7 @@
         <Row>
           <Col span="22">
             <Form ref="updateForm" :model="updateForm" :rules="ruleForm" :label-width="100">
-              <FormItem label="地域名" prop="name">
+              <FormItem label="地域" prop="name">
                 <Input v-model="updateForm.name" placeholder="地域名"></Input>
               </FormItem>
               <FormItem label="备注：">
@@ -104,6 +104,7 @@
   </div>
 </template>
 <script>
+
   import copyright from '@/view/components/public/copyright.vue'
   import {Button, Table, Modal, Message, Tag} from 'iview';
   import {GetBusinessLineList, CreateBusinessLine, UpdateBusinessLine, DeleteBusinessLine} from '@/api/category/businesslines'
@@ -141,19 +142,19 @@
       ruleForm: {
         name: [{ required: true, message: '地域名不能为空', trigger: 'blur' }],
       },
-    //   columnsProjectList:[
-    //     {
-    //       title: 'ID',
-    //       width: 80,
-    //       render: (h, params) => {
-    //         return h('router-link', {props:{to:'/category/projects/'+params.row.id}}, params.row.id)
-    //       }
-    //     },
-    //     {
-    //       title: '项目名',
-    //       key: 'name'
-    //     }
-    //   ],
+      columnsProjectList:[
+        {
+          title: 'ID',
+          width: 80,
+          render: (h, params) => {
+            return h('router-link', {props:{to:'/category/projects/'+params.row.id}}, params.row.id)
+          }
+        },
+        {
+          title: '项目名',
+          key: 'name'
+        }
+      ],
       columnsDataList: [
         {
           title: 'ID',
@@ -161,7 +162,7 @@
           key: 'id'
         },
         {
-          title: '云厂商',
+          title: '地域',
           key: 'name'
         },
         // {
@@ -183,7 +184,7 @@
         //             on: {
         //               click: () => {
         //                 this.showProject.modal = true
-        //                 this.showProject.title = params.row.name + '云厂商'
+        //                 this.showProject.title = params.row.name + '地域'
         //                 this.showProject.data = data
         //               }
         //             }

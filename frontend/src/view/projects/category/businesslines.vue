@@ -23,13 +23,13 @@
           </center>
         </Col>
       </Row>
-      </br>
+      
       <Row>
         <Col span="24">
           <Table :columns="columnsDataList" :data="dataList" size="small"></Table>
         </Col>
       </Row>
-      </br>
+      
       <Page :total=total show-sizer :current=getParams.page @on-change="pageChange" @on-page-size-change="sizeChange"></Page>
     </Card>
     <copyright> </copyright>

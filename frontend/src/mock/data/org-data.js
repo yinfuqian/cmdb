@@ -1,6 +1,6 @@
 export default {
   id: 0,
-  label: 'XXX科技有限公司',
+  label: '深圳追一科技有限公司',
   children: [
     {
       id: 2,
@@ -14,10 +14,10 @@ export default {
           label: '研发-后端'
         }, {
           id: 9,
-          label: 'UI设计'
+          label: '运维'
         }, {
           id: 10,
-          label: '产品经理'
+          label: '交付经理'
         }
       ]
     },
@@ -39,7 +39,7 @@ export default {
       label: '财务部'
     }, {
       id: 11,
-      label: 'HR人事'
+      label: '运营'
     }
   ]
 }

@@ -10,6 +10,6 @@
 
 <template>
   <div>
-    <center><span> Copyright © 2019 Myide </span> </center>
+    <center><span> 追一科技 </span> </center>
   </div>
 </template>

@@ -58,9 +58,6 @@
               <FormItem label="区域：" prop="region">
                 <Input v-model="createForm.region" placeholder="南区"></Input>
               </FormItem>
-              <!-- <FormItem label="U型：" prop="size">
-                <Input v-model="createForm.size" placeholder="U型"></Input>
-              </FormItem> -->
               <FormItem label="备注：" prop="remark">
                 <Input v-model="createForm.remark" placeholder="备注"></Input>
               </FormItem>
@@ -91,9 +88,6 @@
               <FormItem label="区域：" prop="region">
                 <Input v-model="updateForm.region" placeholder="东区"></Input>
               </FormItem>
-              <!-- <FormItem label="U型：" prop="size">
-                <Input v-model="updateForm.size" placeholder="U型"></Input>
-              </FormItem> -->
               <FormItem label="备注：">
                 <Input v-model="updateForm.remark"></Input>
               </FormItem>
@@ -133,6 +127,7 @@
       createModal:false,
       updateModal:false,
       idc:'',
+      region: '',
       search:'',
       idcList:[],
       dataList:[],
@@ -143,12 +138,14 @@
       },
       createForm:{
         idc:'',
+        region: '',
         name:'',
         number:'',
         region:'',
         remark:''
       },
       updateForm:{
+        region: '',
         id:'',
         name:'',
         idc:'',
@@ -159,7 +156,6 @@
       ruleForm: {
         name: [{ required: true, message: '业务类型名不能为空', trigger: 'blur' }],
        // region: [{ required: true, message: '业务类型区域不能为空', trigger: 'blur' }]
-        // size: [{ required: true, message: '机柜型号不能为空', trigger: 'blur' }]
       },
       columnsDataList: [
         {
@@ -187,13 +183,9 @@
         },
         {
           title: '区域',
-          key: 'region',
+          key: 'region_name',
           width: 80
         },
-        // {
-        //   title: '编号',
-        //   key: 'number'
-        // },
         {
           title: '备注',
           key: 'remark'
@@ -336,7 +328,7 @@
       },
 
       cancel () {
-        Message.info('Clicked cancel');
+        Message.info('单击取消');
       }
 
     },

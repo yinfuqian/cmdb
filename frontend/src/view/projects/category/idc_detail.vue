@@ -7,7 +7,7 @@
     <Col span="12">
       <Card>
         <Tabs>
-          <TabPane label="业务类型"></TabPane>
+          <TabPane label="产品类型"></TabPane>
         </Tabs>
         <div style="margin-top:10px;margin-bottom:10px">
           <Row>
@@ -20,7 +20,7 @@
           </Row>
           <Row>
             <Col span="4">
-              <p> <b>业务类型</b> </p>
+              <p> <b>产品类型</b> </p>
             </Col>
             <Col span="20">
               <p> {{row.name}} </p>
@@ -57,7 +57,7 @@
     <Col span="12">
       <Card>
         <Tabs>
-          <TabPane label="相关业务"></TabPane>
+          <TabPane label="相关产品"></TabPane>
         </Tabs>
         <div style="margin-top:10px;margin-bottom:10px">
           <Table :columns="columnsRackList" :data="rackList" size="small"></Table>
@@ -106,7 +106,7 @@ export default {
           }
         },
         {
-          title: '业务类型',
+          title: '产品类型',
           key: 'name'
         }
       ]

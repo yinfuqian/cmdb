@@ -14,7 +14,7 @@
       <Card>
       <Row>
         <Col span="4">
-          <Input search v-model="getParams.search" placeholder="机房名/地址" @on-search="handleGetList" />
+          <Input search v-model="getParams.search" placeholder="产品类型/地址" @on-search="handleGetList" />
         </Col>
 
         <Col span="10">
@@ -40,7 +40,7 @@
     <Modal
       v-model="createModal"
       width="500"
-      title="创建机房"
+      title="创建产品类型"
       @on-ok="handleCreate"
       @on-cancel="cancel">
       <div>

@@ -70,6 +70,7 @@
               <p> {{row.remark}} </p>
             </Col>
           </Row>
+          
         </div>
       </Card>
     </Col>

@@ -26,9 +26,9 @@ class Idc(BaseModel):
 
 
 class Rack(BaseModel):
-    idc = models.ForeignKey(Idc, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='所属机房')
-    number = models.CharField(default='', max_length=64, null=True, blank=True, verbose_name='编号')
-    size = models.CharField(default='', max_length=8, null=True, blank=True, verbose_name='U型')
+    idc = models.ForeignKey(Idc, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='产品类型')
+    #number = models.CharField(default='', max_length=64, null=True, blank=True, verbose_name='编号')
+    #size = models.CharField(default='', max_length=8, null=True, blank=True, verbose_name='U型')
 
     class Meta:
         ordering = ['-id']
@@ -41,7 +41,8 @@ class Server(BaseModel):
         ('1', u'在线'),
     )
     users = models.ManyToManyField(User, default='', null=True, blank=True, verbose_name='业务相关的用户')
-    rack = models.ForeignKey(Rack, default='', null=True, blank=True, on_delete=models.SET_DEFAULT, verbose_name='所属机柜')
+    rack = models.ForeignKey(Rack, default='', null=True, blank=True, on_delete=models.SET_DEFAULT, verbose_name='所属业务')
+    region = models.CharField(default='东区', max_length=200, choices=STATUS,  verbose_name='所属区域')
     ssh_user = models.ForeignKey(SSHUser, default='', null=True, blank=True, on_delete=models.SET_DEFAULT, verbose_name='SSH用户')
     ssh_ip = models.CharField(default='', max_length=128, null=True, blank=True, verbose_name='SSH IP地址/主机名')
     ssh_port = models.IntegerField(default=22, max_length=5, null=True, blank=True, verbose_name='SSH 端口')
