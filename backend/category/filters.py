@@ -22,3 +22,10 @@ class ServerFilter(BaseFilter):
             'name': ['icontains'],
             'ssh_ip': ['icontains']
         }
+class RegionFilter(BaseFilter):
+
+    class Meta:
+        model = Region
+        fields = {
+            'name': ['icontains']          
+        }

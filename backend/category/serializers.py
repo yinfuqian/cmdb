@@ -33,6 +33,25 @@ class RackSerializer(serializers.ModelSerializer):
         ret['idc_name'] = idc.name if idc else None
         return ret
 
+class RegionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Region
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        #print(ret)
+        #servers = instance.server_set.values('id', 'name')
+        print(ret)
+        # ret['regions'] = region
+        #region = instance
+        print(ret['name'])
+        #ret['name'] = ret[name\ if ret else None
+        ret['region_name'] = ret['name']
+        
+        return ret
+
 
 class ServerSerializer(serializers.ModelSerializer):
 
@@ -49,12 +68,12 @@ class ServerSerializer(serializers.ModelSerializer):
             idc_name = rack.idc.name if rack.idc else None
         else:
             rack_name = idc = idc_name = None
-        ret['rack_name'] = rack_name
         ret['idc'] = idc
         ret['idc_name'] = idc_name
         ret['users'] = instance.users.values('id', 'username')
         ret['ssh_user'] = {'id': instance.ssh_user.pk, 'name': instance.ssh_user.name} if instance.ssh_user else {'id': None, 'name': None}
         ret['projects'] = instance.project_set.values('id', 'name')
+        #ret['region_name'] = region_name
         return ret
 
 

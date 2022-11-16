@@ -20,7 +20,7 @@ from .serializers import *
 
 class IdcViewSet(BaseView):
     """
-    机房
+    产品
     """
     queryset = Idc.objects.all()
     serializer_class = IdcSerializer
@@ -30,7 +30,7 @@ class IdcViewSet(BaseView):
 
 class RackViewSet(BaseView):
     """
-    机柜
+    业务
     """
     queryset = Rack.objects.all()
     serializer_class = RackSerializer
@@ -176,6 +176,14 @@ class BusinessLineViewSet(BaseView):
     serializer_class = BusinessLineSerializer
     search_fields = ['name']
 
+
+class RegionViewSet(BaseView):
+    """
+    地域
+    """
+    queryset = Region.objects.all()
+    serializer_class = RegionSerializer
+    search_fields = ['name']
 
 class ProjectViewSet(BaseView):
     """

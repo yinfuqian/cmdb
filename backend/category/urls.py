@@ -14,7 +14,7 @@ router.register(r'servers', ServerViewSet)
 router.register(r'sshusers', SSHUserViewSet)
 router.register(r'businesslines', BusinessLineViewSet)
 router.register(r'projects', ProjectViewSet)
-
+router.register(r'regions', RegionViewSet)
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^api_dashboard/$', APIDashBoardView.as_view()),

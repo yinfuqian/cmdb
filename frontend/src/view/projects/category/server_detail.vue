@@ -31,7 +31,7 @@
 
           <Row>
             <Col span="5">
-              <p> <b>归属机房/机柜：</b> </p>
+              <p> <b>归属产品/业务：</b> </p>
             </Col>
             <Col span="19">
               <p><router-link :to="get_idc_url">{{row.idc_name}}</router-link> / <router-link :to="get_rack_url">{{row.rack_name}}</router-link></p>

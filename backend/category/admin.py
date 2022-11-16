@@ -6,6 +6,7 @@ from .models import Project
 from .models import Rack
 from .models import Server
 from .models import SSHUser
+from .models import Region
 
 # Register your models here.
 
@@ -36,5 +37,9 @@ class BusinessLineAdmin(admin.ModelAdmin):
 
 
 @admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    ordering = ('id',)
+
+@admin.register(Region)
 class ProjectAdmin(admin.ModelAdmin):
     ordering = ('id',)

@@ -1,101 +1,84 @@
 <style scoped>
-  .parm_check_element {
-    width: 400px;
-    margin-left: 10px;
-  }
-  .left20 {
-    margin-left: 20px
-  }
+.parm_check_element {
+  width: 400px;
+  margin-left: 10px;
+}
 
+.left20 {
+  margin-left: 20px
+}
 </style>
 
 <template>
   <div>
-      <Card>
+    <Card>
       <Row>
         <Col span="4">
-          <Input search v-model="getParams.search" placeholder="搜索" @on-search="handleGetList" />
+        <Input search v-model="getParams.search" placeholder="搜索" @on-search="handleGetList" />
         </Col>
 
         <Col span="10">
-          <center>
-            <Button type="primary" icon="md-add" @click="createModal = true">创建</Button>
-          </center>
+        <center>
+          <Button type="primary" icon="md-add" @click="createModal = true">创建</Button>
+        </center>
         </Col>
       </Row>
-      
+
       <Row>
         <Col span="24">
-          <Table :columns="columnsDataList" :data="dataList" size="small"></Table>
+        <Table :columns="columnsDataList" :data="dataList" size="small"></Table>
         </Col>
       </Row>
-      
-      <Page :total=total show-sizer :current=getParams.page @on-change="pageChange" @on-page-size-change="sizeChange"></Page>
+
+      <Page :total=total show-sizer :current=getParams.page @on-change="pageChange" @on-page-size-change="sizeChange">
+      </Page>
     </Card>
     <copyright> </copyright>
 
     <Spin size="large" fix v-if="spinShow"></Spin>
 
-    <Modal
-      v-model="createModal"
-      width="500"
-      title="创建地域"
-      @on-ok="handleCreate"
-      @on-cancel="cancel">
+    <Modal v-model="createModal" width="500" title="创建地域" @on-ok="handleCreate" @on-cancel="cancel">
       <div>
         <Row>
           <Col span="22">
-            <Form ref="createForm" :model="createForm" :rules="ruleForm" :label-width="100">
-              <FormItem label="地域" prop="name" >
-                <Input v-model="createForm.name" placeholder="地域"></Input>
-              </FormItem>          
-              <FormItem label="备注：" prop="remark">
-                <Input v-model="createForm.remark" placeholder="备注"></Input>
-              </FormItem>
-            </Form>
+          <Form ref="createForm" :model="createForm" :rules="ruleForm" :label-width="100">
+            <FormItem label="地域" prop="name">
+              <Input v-model="createForm.name" placeholder="地域"></Input>
+            </FormItem>
+            <FormItem label="备注：" prop="remark">
+              <Input v-model="createForm.remark" placeholder="备注"></Input>
+            </FormItem>
+          </Form>
           </Col>
         </Row>
       </div>
     </Modal>
 
-    <Modal
-      v-model="updateModal"
-      width="500"
-      title="修改地域"
-      @on-ok="handleUpdate"
-      @on-cancel="cancel">
+    <Modal v-model="updateModal" width="500" title="修改地域" @on-ok="handleUpdate" @on-cancel="cancel">
       <div>
         <Row>
           <Col span="22">
-            <Form ref="updateForm" :model="updateForm" :rules="ruleForm" :label-width="100">
-              <FormItem label="地域" prop="name">
-                <Input v-model="updateForm.name" placeholder="地域名"></Input>
-              </FormItem>
-              <FormItem label="备注：">
-                <Input v-model="updateForm.remark"></Input>
-              </FormItem>
-            </Form>
+          <Form ref="updateForm" :model="updateForm" :rules="ruleForm" :label-width="100">
+            <FormItem label="地域" prop="name">
+              <Input v-model="updateForm.name" placeholder="地域名"></Input>
+            </FormItem>
+            <FormItem label="备注：">
+              <Input v-model="updateForm.remark"></Input>
+            </FormItem>
+          </Form>
           </Col>
         </Row>
       </div>
 
     </Modal>
 
-    <Modal
-      v-model="deleteModal"
-      width="450"
-      title="删除地域"
-      @on-ok="handleDelete"
-      @on-cancel="cancel">
+    <Modal v-model="deleteModal" width="450" title="删除地域" @on-ok="handleDelete" @on-cancel="cancel">
       <div>
-        <p>确认删除地域 {{deleteData.name}} ?</p>
+        <p>确认删除地域 {{ deleteData.name }} ?</p>
       </div>
     </Modal>
 
-    <Modal
-      v-model="showProject.modal"
-      width="450"
-      :title="showProject.title">
+    <Modal v-model="showProject.modal" width="450" :title="showProject.title">
       <div class="modalcontent">
         <Table :columns="columnsProjectList" :data="showProject.data" size="small"></Table>
       </div>
@@ -104,57 +87,52 @@
   </div>
 </template>
 <script>
-
-  import copyright from '@/view/components/public/copyright.vue'
-  import {Button, Table, Modal, Message, Tag} from 'iview';
-  import {GetBusinessLineList, CreateBusinessLine, UpdateBusinessLine, DeleteBusinessLine} from '@/api/category/businesslines'
-  import {GetUserList} from '@/api/account/users'
-
-  export default {
-    components: {copyright},
-    data () {
-      return {
-      spinShow:false,
-      deleteModal:false,
-      createModal:false,
-      updateModal:false,
-      userList:[],
-      search:'',
-      dataList:[],
-      showProject:{
-        modal:false,
-        title:'',
-        data:[]
+import copyright from '@/view/components/public/copyright.vue'
+import { Button, Table, Modal, Message, Tag } from 'iview';
+// import { Button, Message } from 'iview'
+import { GetRegionList, CreateRegion, UpdateRegion, DeleteRegion } from '@/api/category/regions'
+// import {GetUserList} from '@/api/account/users'
+export default {
+  components: { copyright },
+  data() {
+    return {
+      spinShow: false,
+      deleteModal: false,
+      createModal: false,
+      updateModal: false,
+      //userList:[],
+      search: '',
+      dataList: [],
+      showProject: {
+        modal: false,
+        title: '',
+        data: []
       },
-      deleteData:{
-        id:'',
-        name:''
+      deleteData: {
+        id: '',
+        name: ''
       },
-      createForm:{
-        name:'',
-        remark:''
+      createForm: {
+        name: '',
+        remark: ''
       },
-      updateForm:{
-        id:'',
-        name:'',
-        remark:''
+      updateForm: {
+        id: '',
+        name: '',
+        remark: ''
       },
       ruleForm: {
         name: [{ required: true, message: '地域名不能为空', trigger: 'blur' }],
       },
-      columnsProjectList:[
-        {
-          title: 'ID',
-          width: 80,
-          render: (h, params) => {
-            return h('router-link', {props:{to:'/category/projects/'+params.row.id}}, params.row.id)
-          }
-        },
-        {
-          title: '项目名',
-          key: 'name'
-        }
-      ],
+      // columnsProjectList:[
+      //   {
+      //     title: 'ID',
+      //     width: 80,
+      //     render: (h, params) => {
+      //       return h('router-link', {props:{to:'/category/projects/'+params.row.id}}, params.row.id)
+      //     }
+      //   }
+      // ],
       columnsDataList: [
         {
           title: 'ID',
@@ -162,38 +140,9 @@
           key: 'id'
         },
         {
-          title: '地域',
+          title: '地域名',
           key: 'name'
         },
-        // {
-        //   title: '项目列表',
-        //   render: (h, params) => {
-        //     let data = params.row.projects
-        //     if (data.length == 0) {
-        //       var subelm = []
-        //     } else {
-        //       var subelm = [
-        //         h(Button, {
-        //             props: {
-        //               type: 'info',
-        //               size: 'small'
-        //             },
-        //             style: {
-        //               marginRight: '12px'
-        //             },
-        //             on: {
-        //               click: () => {
-        //                 this.showProject.modal = true
-        //                 this.showProject.title = params.row.name + '地域'
-        //                 this.showProject.data = data
-        //               }
-        //             }
-        //         }, '详情' + ' (' + data.length + ')')
-        //       ]
-        //     }
-        //     return h('div', {}, subelm)
-        //   }
-        // },
         {
           title: '备注',
           key: 'remark'
@@ -206,27 +155,27 @@
           render: (h, params) => {
             return h('div', [
               h(Button, {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '12px'
-                  },
-                  on: {
-                    click: () => {
-                      const row = params.row
-                      this.updateModal = true
-                      this.updateForm.id = row.id
-                      this.updateForm.name = row.name
-                      let users = []
-                      for (let item of row.users) {
-                        users.push(item.id)
-                      }
-                      this.updateForm.users = users
-                      this.updateForm.remark = row.remark
-                    }
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '12px'
+                },
+                on: {
+                  click: () => {
+                    const row = params.row
+                    this.updateModal = true
+                    this.updateForm.id = row.id
+                    this.updateForm.name = row.name
+                    // let users = []
+                    // for (let item of row.users) {
+                    //   users.push(item.id)
+                    // }
+                    // this.updateForm.users = users
+                    this.updateForm.remark = row.remark
                   }
+                }
               }, '修改'),
               h(Button, {
                 props: {
@@ -245,99 +194,99 @@
           }
         },
       ],
-      total:1,
-      getParams:{
-        page:1,
-        pagesize:10,
-        search:'',
+      total: 1,
+      getParams: {
+        page: 1,
+        pagesize: 10,
+        search: '',
       },
-      getMaxParams:{
-        page:1,
-        pagesize:1000,
-        search:'',
+      getMaxParams: {
+        page: 1,
+        pagesize: 1000,
+        search: '',
       }
-      }
-    },
+    }
+  },
 
-    created () {
-      this.handleGetList()
-      this.handleGetListUsers()
-    },
+  created() {
+    this.handleGetList()
+    this.handleGetListUsers()
+  },
 
-    methods: {
+  methods: {
 
-      handleGetList () {
-        GetBusinessLineList(this.getParams)
+    handleGetList() {
+      GetRegionList(this.getParams)
         .then(
           res => {
             this.dataList = res.data.results
             this.total = res.data.count
           }
         )
-      },
+    },
 
-      handleGetListUsers () {
-        GetUserList(this.getMaxParams)
-        .then(
-          res => {
-            this.userList = res.data.results
-          }
-        )
-      },
+    // handleGetListUsers () {
+    //   GetUserList(this.getMaxParams)
+    //   .then(
+    //     res => {
+    //       this.userList = res.data.results
+    //     }
+    //   )
+    // },
 
-      pageChange (page) {
-        this.getParams.page = page
-        this.handleGetList()
-      },
+    pageChange(page) {
+      this.getParams.page = page
+      this.handleGetList()
+    },
 
-      sizeChange (size){
-        this.getParams.pagesize = size
-        this.handleGetList()
-      },
+    sizeChange(size) {
+      this.getParams.pagesize = size
+      this.handleGetList()
+    },
 
-      handleCreate () {
-        this.$refs.createForm.validate((valid) => {
-          if (!valid) {
-            return
-          }
-          let data = this.createForm
-          CreateBusinessLine(data)
+    handleCreate() {
+      this.$refs.createForm.validate((valid) => {
+        if (!valid) {
+          return
+        }
+        let data = this.createForm
+        CreateRegion(data)
           .then(
             res => {
               this.handleGetList()
             },
           )
-        })
-      },
+      })
+    },
 
-      handleUpdate () {
-        this.$refs.updateForm.validate((valid) => {
-          if (!valid) {
-            return
-          }
-          let id = this.updateForm.id
-          let data = this.updateForm
-          UpdateBusinessLine(id, data)
+    handleUpdate() {
+      this.$refs.updateForm.validate((valid) => {
+        if (!valid) {
+          return
+        }
+        let id = this.updateForm.id
+        let data = this.updateForm
+        UpdateRegion(id, data)
           .then(
             res => {
               this.handleGetList()
             }
           )
-        })
-      },
+      })
+    },
 
-      handleDelete () {
-        let id = this.deleteData.id
-        DeleteBusinessLine(id)
-        .then (res => {
+    handleDelete() {
+      let id = this.deleteData.id
+      DeleteRegion(id)
+        .then(res => {
           this.handleGetList()
         })
-      },
-
-      cancel () {
-        Message.info('Clicked cancel');
-      }
-
     },
-  }
+
+    cancel() {
+      Message.info('操作取消');
+    }
+
+  },
+}
 </script>

@@ -1,11 +1,11 @@
 <template>
   <Form ref="loginForm" :model="form" :rules="rules" @keydown.enter.native="handleSubmit">
-    <FormItem label="登录类型">
+    <!-- <FormItem label="登录类型">
       <RadioGroup v-model="form.loginType">
         <Radio label="common">普通登录</Radio>
         <Radio label="unified">LDAP登录</Radio>
       </RadioGroup>
-    </FormItem>
+    </FormItem> -->
     <FormItem prop="userName">
       <Input v-model="form.userName" placeholder="请输入用户名">
         <span slot="prepend">

@@ -14,7 +14,7 @@
       <Card>
       <Row>
         <Col span="4">
-          <Input search v-model="getParams.search" placeholder="产品类型/地址" @on-search="handleGetList" />
+          <Input search v-model="getParams.search" placeholder="产品类型/云厂商" @on-search="handleGetList" />
         </Col>
 
         <Col span="10">
@@ -50,7 +50,7 @@
               <FormItem label="产品类型" prop="name">
                 <Input v-model="createForm.name" placeholder="产品类型"></Input>
               </FormItem>
-              <FormItem label="地址：" prop="address">
+              <FormItem label="云厂商：" prop="address">
                 <Input v-model="createForm.address" placeholder="腾讯云"></Input>
               </FormItem>
               <FormItem label="备注：" prop="remark">
@@ -75,7 +75,7 @@
               <FormItem label="产品类型：" prop="host">
                 <Input v-model="updateForm.name" placeholder="个人开发"></Input>
               </FormItem>
-              <FormItem label="所属产品线：" prop="port">
+              <FormItem label="云厂商：" prop="port">
                 <Input v-model="updateForm.address" placeholder="腾讯云"></Input>
               </FormItem>
               <FormItem label="备注：">

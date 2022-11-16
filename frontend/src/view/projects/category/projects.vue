@@ -63,7 +63,7 @@
                   <Option v-for="item in userList" :value="item.id" :key="item.id">{{ item.username }}</Option>
                 </Select>
               </FormItem>
-              <FormItem label="所属业务线：">
+              <FormItem label="云厂商：">
                 <Select v-model="createForm.businesses" filterable multiple>
                   <Option v-for="item in businessLineList" :value="item.id" :key="item.id">{{ item.name }}</Option>
                 </Select>
@@ -81,8 +81,8 @@
               <FormItem label="版本库地址：" prop="repo_url">
                 <Input v-model="createForm.repo_url" placeholder="版本库地址"></Input>
               </FormItem>
-              <FormItem label="Jenkins Job：" prop="jenkins_job">
-                <Input v-model="createForm.jenkins_job" placeholder="Jenkins Job"></Input>
+              <FormItem label="流水线地址：" prop="jenkins_job">
+                <Input v-model="createForm.jenkins_job" placeholder="流水线地址"></Input>
               </FormItem>
               <FormItem label="备注：" prop="remark">
                 <Input v-model="createForm.remark" placeholder="备注"></Input>
@@ -117,7 +117,7 @@
                   <Option v-for="item in userList" :value="item.id" :key="item.id">{{ item.username }}</Option>
                 </Select>
               </FormItem>
-              <FormItem label="所属业务线：">
+              <FormItem label="云厂商：">
                 <Select v-model="updateForm.businesses" filterable multiple>
                   <Option v-for="item in businessLineList" :value="item.id" :key="item.id">{{ item.name }}</Option>
                 </Select>
@@ -135,8 +135,8 @@
               <FormItem label="版本库地址：" prop="repo_url">
                 <Input v-model="updateForm.repo_url" placeholder="版本库地址"></Input>
               </FormItem>
-              <FormItem label="Jenkins Job：" prop="jenkins_job">
-                <Input v-model="updateForm.jenkins_job" placeholder="Jenkins Job"></Input>
+              <FormItem label="流水线地址：" prop="jenkins_job">
+                <Input v-model="updateForm.jenkins_job" placeholder="流水线地址"></Input>
               </FormItem>
               <FormItem label="备注：">
                 <Input v-model="updateForm.remark"></Input>
@@ -225,7 +225,7 @@
         remark:''
       },
       ruleForm: {
-        name: [{ required: true, message: '业务线名不能为空', trigger: 'blur' }],
+        name: [{ required: true, message: '项目名不能为空', trigger: 'blur' }],
       },
       columnsBusinessLineList:[
         {
@@ -234,7 +234,7 @@
           width: 80
         },
         {
-          title: '业务线名',
+          title: '云厂商',
           key: 'name'
         }
       ],
@@ -264,7 +264,7 @@
           }
         },
         {
-          title: '所属业务线',
+          title: '云厂商',
           width: 100,
           render: (h, params) => {
             let data = params.row.businesses
@@ -302,7 +302,7 @@
           key: 'repo_url'
         },
         {
-          title: 'Jenkins Job',
+          title: '流水线地址',
           key: 'jenkins_job'
         },
         {

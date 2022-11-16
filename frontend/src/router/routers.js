@@ -128,10 +128,10 @@ export default [
         children: [
           {
             path: 'businesslines',
-            name: 'businesslines',
+            name: '云厂商管理',
             meta: {
               icon: 'ios-git-network',
-              title: 'businesslines'
+              title: '云厂商管理'
             },
             component: () => import('@/view/projects/category/businesslines.vue')
           },
