@@ -24,25 +24,21 @@ class Idc(BaseModel):
         ordering = ['-id']
         unique_together = ('name',)
 
+class Region(BaseModel):
+    address = models.CharField(max_length=256, null=True, blank=True, verbose_name='区域类型')
+
+    class Meta:#
+        ordering = ['-id']
+        unique_together = ['name']
 
 class Rack(BaseModel):
-    REGION = (
-        ('东区', '东区'),
-        ('南区', '南区'),
-        ('西区', '西区'),
-        ('北区', '北区')
-    )
-    region = models.CharField(default='', max_length=256, choices=REGION, null=True, blank=True, verbose_name='区域类型')
+    region = models.ForeignKey(Region, null=True, blank=True, on_delete=models.SET_NULL,verbose_name='区域类型')
     idc = models.ForeignKey(Idc, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='业务类型')
-    #number = models.CharField(default='', max_length=64, null=True, blank=True, verbose_name='编号')
-    #size = models.CharField(default='', max_length=8, null=True, blank=True, verbose_name='U型')
 
     class Meta:
         ordering = ['-id']
-        unique_together = ('name', 'idc')
-
-
-
+        unique_together = ['name']
+    
 class Server(BaseModel):
     STATUS = (
         ('0', u'下线'),
@@ -50,7 +46,7 @@ class Server(BaseModel):
     )
     users = models.ManyToManyField(User, default='', null=True, blank=True, verbose_name='业务相关的用户')
     rack = models.ForeignKey(Rack, default='', null=True, blank=True, on_delete=models.SET_DEFAULT, verbose_name='所属业务')
-    #region = models.ForeignKey(Region,default='', null=True, blank=True, on_delete=models.SET_DEFAULT,verbose_name='所属区域')
+    region = models.ForeignKey(Region,default='', null=True, blank=True, on_delete=models.SET_DEFAULT,verbose_name='所属区域')
     ssh_user = models.ForeignKey(SSHUser, default='', null=True, blank=True, on_delete=models.SET_DEFAULT, verbose_name='SSH用户')
     ssh_ip = models.CharField(default='', max_length=128, null=True, blank=True, verbose_name='SSH IP地址/主机名')
     ssh_port = models.IntegerField(default=22, max_length=5, null=True, blank=True, verbose_name='SSH 端口')
@@ -73,17 +69,7 @@ class BusinessLine(BaseModel):
         ordering = ['-id']
         unique_together = ['name']
 
-class Region(BaseModel):
-    REGIONS = (
-        ('东区', '东区'),
-        ('南区', '南区'),
-        ('西区', '西区'),
-        ('北区', '北区')
-    )
-    address = models.CharField(default='', max_length=256, choices=REGIONS, null=True, blank=True, verbose_name='区域类型')
-    class Meta:#
-        ordering = ['-id']
-        unique_together = ['name']
+
 
 
 

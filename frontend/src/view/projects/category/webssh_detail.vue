@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Alert>IDC信息：/ {{row.idc_name}} / {{row.rack_name}} / {{row.ssh_ip}} </Alert>
+    <Alert>产品信息：/ {{row.idc_name}} / {{row.rack_name}} / {{row.ssh_ip}} </Alert>
     <my-terminal :terminal="terminal"></my-terminal>
   </div>
 </template>

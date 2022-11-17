@@ -88,19 +88,18 @@
 </template>
 <script>
 import copyright from '@/view/components/public/copyright.vue'
-import { Button, Table, Modal, Message, Tag } from 'iview';
-// import { Button, Message } from 'iview'
+import { Button, Table, Modal, Message, Tag } from 'iview'
 import { GetRegionList, CreateRegion, UpdateRegion, DeleteRegion } from '@/api/category/regions'
 // import {GetUserList} from '@/api/account/users'
 export default {
   components: { copyright },
-  data() {
+  data () {
     return {
       spinShow: false,
       deleteModal: false,
       createModal: false,
       updateModal: false,
-      //userList:[],
+      regionList: [],
       search: '',
       dataList: [],
       showProject: {
@@ -124,15 +123,15 @@ export default {
       ruleForm: {
         name: [{ required: true, message: '地域名不能为空', trigger: 'blur' }],
       },
-      // columnsProjectList:[
-      //   {
-      //     title: 'ID',
-      //     width: 80,
-      //     render: (h, params) => {
-      //       return h('router-link', {props:{to:'/category/projects/'+params.row.id}}, params.row.id)
-      //     }
-      //   }
-      // ],
+      columnsProjectList: [
+        {
+          title: 'ID',
+          width: 80,
+          render: (h, params) => {
+            return h('router-link', { props: { to: '/category/region/' + params.row.id } }, params.row.id)
+          }
+        }
+      ],
       columnsDataList: [
         {
           title: 'ID',
@@ -192,7 +191,7 @@ export default {
               }, '删除')
             ])
           }
-        },
+        }
       ],
       total: 1,
       getParams: {
@@ -208,14 +207,14 @@ export default {
     }
   },
 
-  created() {
+  created () {
     this.handleGetList()
-    this.handleGetListUsers()
+    // this.handleGetListUsers()
   },
 
   methods: {
 
-    handleGetList() {
+    handleGetList () {
       GetRegionList(this.getParams)
         .then(
           res => {
@@ -234,17 +233,17 @@ export default {
     //   )
     // },
 
-    pageChange(page) {
+    pageChange (page) {
       this.getParams.page = page
       this.handleGetList()
     },
 
-    sizeChange(size) {
+    sizeChange (size) {
       this.getParams.pagesize = size
       this.handleGetList()
     },
 
-    handleCreate() {
+    handleCreate () {
       this.$refs.createForm.validate((valid) => {
         if (!valid) {
           return
@@ -259,7 +258,7 @@ export default {
       })
     },
 
-    handleUpdate() {
+    handleUpdate () {
       this.$refs.updateForm.validate((valid) => {
         if (!valid) {
           return
@@ -275,7 +274,7 @@ export default {
       })
     },
 
-    handleDelete() {
+    handleDelete () {
       let id = this.deleteData.id
       DeleteRegion(id)
         .then(res => {
@@ -283,7 +282,7 @@ export default {
         })
     },
 
-    cancel() {
+    cancel () {
       Message.info('操作取消');
     }
 

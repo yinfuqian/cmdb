@@ -1,6 +1,6 @@
 import axios from '@/libs/api.request'
 
-const RegionUrl = '/api/category/regions/'
+const RegionUrl = '/api/category/region/'
 
 export const GetRegionList = (params) => {
   return axios.request({

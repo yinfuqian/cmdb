@@ -54,14 +54,6 @@
             </Col>
           </Row>
           
-          <!-- <Row>
-            <Col span="4">
-              <p> <b>U型：</b> </p>
-            </Col>
-            <Col span="20">
-              <p> {{row.size}} </p>
-            </Col>
-          </Row> -->
           <Row>
             <Col span="4">
               <p> <b>备注：</b> </p>
@@ -118,11 +110,11 @@ export default {
       return url
     }
 
-    // get_region_url: function () {
-    //   let url = '/category/idcs/' + this.row.region_name
-    //   return url
-    // }
-  },
+  //   get_region_url: function () {
+  //     let url = '/category/region/' + this.row.region_name
+  //     return url
+  //   }
+   },
   data () {
     return {
       row:{},

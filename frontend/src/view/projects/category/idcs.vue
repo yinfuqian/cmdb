@@ -1,147 +1,138 @@
 <style scoped>
-  .parm_check_element {
-    width: 400px;
-    margin-left: 10px;
-  }
-  .left20 {
-    margin-left: 20px
-  }
+.parm_check_element {
+  width: 400px;
+  margin-left: 10px;
+}
 
+.left20 {
+  margin-left: 20px
+}
 </style>
 
 <template>
   <div>
-      <Card>
+    <Card>
       <Row>
         <Col span="4">
-          <Input search v-model="getParams.search" placeholder="产品类型/云厂商" @on-search="handleGetList" />
+        <Input search v-model="getParams.search" placeholder="产品类型/云厂商" @on-search="handleGetList" />
         </Col>
 
         <Col span="10">
-          <center>
-            <Button type="primary" icon="md-add" @click="createModal = true">创建</Button>
-          </center>
+        <center>
+          <Button type="primary" icon="md-add" @click="createModal = true">创建</Button>
+        </center>
         </Col>
       </Row>
       </br>
       <Row>
         <Col span="24">
-          <Table :columns="columnsDataList" :data="dataList" size="small"></Table>
+        <Table :columns="columnsDataList" :data="dataList" size="small"></Table>
         </Col>
       </Row>
       </br>
-      <Page :total=total show-sizer :current=getParams.page @on-change="pageChange" @on-page-size-change="sizeChange"></Page>
+      <Page :total=total show-sizer :current=getParams.page @on-change="pageChange" @on-page-size-change="sizeChange">
+      </Page>
 
     </Card>
     <copyright> </copyright>
 
     <Spin size="large" fix v-if="spinShow"></Spin>
 
-    <Modal
-      v-model="createModal"
-      width="500"
-      title="创建产品类型"
-      @on-ok="handleCreate"
-      @on-cancel="cancel">
+    <Modal v-model="createModal" width="500" title="创建产品类型" @on-ok="handleCreate" @on-cancel="cancel">
       <div>
         <Row>
           <Col span="22">
-            <Form ref="createForm" :model="createForm" :rules="ruleForm" :label-width="100">
-              <FormItem label="产品类型" prop="name">
-                <Input v-model="createForm.name" placeholder="产品类型"></Input>
-              </FormItem>
-              <FormItem label="云厂商：" prop="address">
-                <Input v-model="createForm.address" placeholder="腾讯云"></Input>
-              </FormItem>
-              <FormItem label="备注：" prop="remark">
-                <Input v-model="createForm.remark" placeholder="备注"></Input>
-              </FormItem>
-            </Form>
+          <Form ref="createForm" :model="createForm" :rules="ruleForm" :label-width="100">
+            <FormItem label="产品类型" prop="name">
+              <Input v-model="createForm.name" placeholder="产品类型"></Input>
+            </FormItem>
+            <FormItem label="确定是否有定制化:(0:是|1:否)" prop="address">
+              <Input v-model="createForm.address" placeholder="2"></Input>
+            </FormItem>
+            <FormItem label="备注：" prop="remark">
+              <Input v-model="createForm.remark" placeholder="备注"></Input>
+            </FormItem>
+          </Form>
           </Col>
         </Row>
       </div>
     </Modal>
 
-    <Modal
-      v-model="updateModal"
-      width="500"
-      title="修改产品类型"
-      @on-ok="handleUpdate"
-      @on-cancel="cancel">
+    <Modal v-model="updateModal" width="500" title="修改产品类型" @on-ok="handleUpdate" @on-cancel="cancel">
       <div>
         <Row>
           <Col span="22">
-            <Form ref="updateForm" :model="updateForm" :rules="ruleForm" :label-width="100">
-              <FormItem label="产品类型：" prop="host">
-                <Input v-model="updateForm.name" placeholder="个人开发"></Input>
-              </FormItem>
-              <FormItem label="云厂商：" prop="port">
-                <Input v-model="updateForm.address" placeholder="腾讯云"></Input>
-              </FormItem>
-              <FormItem label="备注：">
-                <Input v-model="updateForm.remark"></Input>
-              </FormItem>
-            </Form>
+          <Form ref="updateForm" :model="updateForm" :rules="ruleForm" :label-width="100">
+            <FormItem label="产品类型：" prop="host">
+              <Input v-model="updateForm.name" placeholder="个人开发"></Input>
+            </FormItem>
+            <FormItem label="确定是否有定制化:(0:是|1:否)" prop="port">
+              <Input v-model="updateForm.address" placeholder="1"></Input>
+            </FormItem>
+            <FormItem label="备注：">
+              <Input v-model="updateForm.remark"></Input>
+            </FormItem>
+          </Form>
           </Col>
         </Row>
       </div>
     </Modal>
 
-    <Modal
-      v-model="deleteModal"
-      width="450"
-      title="产品类型"
-      @on-ok="handleDelete"
-      @on-cancel="cancel">
+    <Modal v-model="deleteModal" width="450" title="产品类型" @on-ok="handleDelete" @on-cancel="cancel">
       <div>
-        <p>确认删除产品类型 {{deleteData.name}} ?</p>
+        <p>确认删除产品类型 {{ deleteData.name }} ?</p>
       </div>
     </Modal>
 
   </div>
 </template>
 <script>
-  import copyright from '@/view/components/public/copyright.vue'
-  import {Button, Table, Modal, Message, Tag} from 'iview';
-  import {GetIdcList, CreateIdc, UpdateIdc, DeleteIdc} from '@/api/category/idcs'
-  import {alertWarning} from '@/libs/view/common'
+import copyright from '@/view/components/public/copyright.vue'
+import { Button, Table, Modal, Message, Tag } from 'iview'
+import { GetIdcList, CreateIdc, UpdateIdc, DeleteIdc } from '@/api/category/idcs'
+import { alertWarning } from '@/libs/view/common'
 
-  export default {
-    components: {copyright},
-    data () {
-      return {
-      spinShow:false,
-      deleteModal:false,
-      createModal:false,
-      updateModal:false,
-      search:'',
-      dataList:[],
-      deleteData:{
-        id:'',
-        name:''
+export default {
+  components: { copyright },
+  data () {
+    return {
+      spinShow: false,
+      deleteModal: false,
+      createModal: false,
+      updateModal: false,
+      search: '',
+      dataList: [],
+      deleteData: {
+        id: '',
+        name: ''
       },
-      createForm:{
+      createForm: {
         name: '',
         address: '',
         remark: ''
       },
-      updateForm:{
-        id:'',
-        name:'',
-        address:'',
-        remark:''
+      updateForm: {
+        id: '',
+        name: '',
+        address: '',
+        remark: ''
       },
       ruleForm: {
         name: [{ required: true, message: '产品类型不能为空', trigger: 'blur' }],
-        address: [{ required: true, message: '产品类型不能为空', trigger: 'blur' }],
+        address: [{ required: true, message: '不能为空', trigger: 'blur' }],
       },
       columnsDataList: [
+        // {
+        //   title: 'ID',
+        //   width: 80,
+        //   render: (h, params) => {
+        //     return h('router-link', { props: { to: '/category/idcs/' + params.row.id } }, params.row.id)
+        //   }
+        // },
         {
           title: 'ID',
-          width: 80,
-          render: (h, params) => {
-            return h('router-link', {props:{to:'/category/idcs/'+params.row.id}}, params.row.id)
-          }
+          key: 'id',
+          width: 80
         },
         {
           title: '产品类型',
@@ -151,11 +142,11 @@
           title: '项目数',
           render: (h, params) => {
             let row = params.row
-            return h('div', [h('span',{props:{}}, row.racks.length)])
+            return h('div', [h('span', { props: {} }, row.racks.length)])
           }
         },
         {
-          title: '地址',
+          title: '存在定制化[0:是][1:否]',
           key: 'address'
         },
         {
@@ -170,23 +161,23 @@
           render: (h, params) => {
             return h('div', [
               h(Button, {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '12px'
-                  },
-                  on: {
-                    click: () => {
-                      const row = params.row
-                      this.updateModal = true
-                      this.updateForm.id = row.id
-                      this.updateForm.name = row.name
-                      this.updateForm.address = row.address
-                      this.updateForm.remark = row.remark
-                    }
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '12px'
+                },
+                on: {
+                  click: () => {
+                    const row = params.row
+                    this.updateModal = true
+                    this.updateForm.id = row.id
+                    this.updateForm.name = row.name
+                    this.updateForm.address = row.address
+                    this.updateForm.remark = row.remark
                   }
+                }
               }, '修改'),
               h(Button, {
                 props: {
@@ -205,87 +196,87 @@
           }
         },
       ],
-      total:1,
-      getParams:{
-        page:1,
-        pagesize:10,
-        search:'',
-      },
+      total: 1,
+      getParams: {
+        page: 1,
+        pagesize: 10,
+        search: ''
       }
-    },
+    }
+  },
 
-    created () {
-      this.handleGetList()
-    },
+  created () {
+    this.handleGetList()
+  },
 
-    methods: {
+  methods: {
 
-      handleGetList () {
-        GetIdcList(this.getParams)
+    handleGetList () {
+      GetIdcList(this.getParams)
         .then(
           res => {
             this.dataList = res.data.results
             this.total = res.data.count
           }
         )
-      },
+    },
 
-      pageChange (page) {
-        this.getParams.page = page
-        this.handleGetList()
-      },
+    pageChange (page) {
+      this.getParams.page = page
+      this.handleGetList()
+    },
 
-      sizeChange (size){
-        this.getParams.pagesize = size
-        this.handleGetList()
-      },
+    sizeChange (size) {
+      this.getParams.pagesize = size
+      this.handleGetList()
+    },
 
-      handleCreate () {
-        this.$refs.createForm.validate((valid) => {
-          if (!valid) {
-            return
-          }
-          let data = this.createForm
-          CreateIdc(data)
+    handleCreate () {
+      this.$refs.createForm.validate((valid) => {
+        if (!valid) {
+          return
+        }
+        let data = this.createForm
+        CreateIdc(data)
           .then(
             res => {
               this.handleGetList()
               alertWarning('create', this.$Notice, data.name)
             },
           )
-        })
-      },
+      })
+    },
 
-      handleUpdate () {
-        this.$refs.updateForm.validate((valid) => {
-          if (!valid) {
-            return
-          }
-          let id = this.updateForm.id
-          let data = this.updateForm
-          UpdateIdc(id, data)
+    handleUpdate () {
+      this.$refs.updateForm.validate((valid) => {
+        if (!valid) {
+          return
+        }
+        let id = this.updateForm.id
+        let data = this.updateForm
+        UpdateIdc(id, data)
           .then(
             res => {
               this.handleGetList()
               alertWarning('update', this.$Notice, id)
             }
           )
-        })
-      },
+      })
+    },
 
-      handleDelete () {
-        let id = this.deleteData.id
-        DeleteIdc(id)
-        .then (res => {
+    handleDelete () {
+      let id = this.deleteData.id
+      DeleteIdc(id)
+        .then(res => {
           this.handleGetList()
           alertWarning('delete', this.$Notice, id)
         })
-      },
-
-      cancel () {
-        Message.info('Clicked cancel');
-      }
-
     },
+
+    cancel () {
+      Message.info('操作取消')
+    }
+
   }
+}
 </script>

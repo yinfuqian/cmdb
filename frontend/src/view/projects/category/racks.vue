@@ -54,14 +54,10 @@
 
             <FormItem label="选择地域：">
               <Select v-model="createForm.region">
-                <Option v-for="item in RegionList" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                <Option v-for="item in regionList" :value="item.id" :key="item.id">{{ item.name }}</Option>
               </Select>
             </FormItem>
 
-
-            <!-- <FormItem label="区域：" prop="region">
-                <Option v-for="item in RegionList" :value="item.id" :key="item.id">{{ item.name }}</Option>
-              </FormItem> -->
             <FormItem label="备注：" prop="remark">
               <Input v-model="createForm.remark" placeholder="备注"></Input>
             </FormItem>
@@ -84,13 +80,10 @@
             <FormItem label="业务类型：" prop="name">
               <Input v-model="updateForm.name" placeholder="业务类型"></Input>
             </FormItem>
-            <!-- <FormItem label="区域：" prop="region">
-                <Option v-for="item in RegionList" :value="item.id" :key="item.id">{{ item.name }}</Option>
-                <Input v-model="updateForm.region" placeholder="东区"></Input>
-              </FormItem> -->
+
             <FormItem label="选择地域：">
-              <Select v-model="createForm.region">
-                <Option v-for="item in RegionList" :value="item.id" :key="item.id">{{ item.name }}</Option>
+              <Select v-model="updateForm.region">
+                <Option v-for="item in regionList" :value="item.id" :key="item.id">{{ item.name }}</Option>
               </Select>
             </FormItem>
             <FormItem label="备注：">
@@ -111,17 +104,18 @@
   </div>
 </template>
 <script>
-import { Button, Table, Modal, Message, Tag } from 'iview';
+import { Button, Message } from 'iview'
 import copyright from '@/view/components/public/copyright.vue'
 import { GetRackList, CreateRack, UpdateRack, DeleteRack } from '@/api/category/racks'
 import { GetIdcList } from '@/api/category/idcs'
 import { alertWarning } from '@/libs/view/common'
-// import {GetRegionList} from '@/api/category/regions'
+import { GetRegionList } from '@/api/category/regions'
 
 export default {
 
   components: { copyright },
-  data() {
+
+  data () {
     return {
       spinShow: false,
       deleteModal: false,
@@ -160,8 +154,9 @@ export default {
         {
           title: 'ID',
           width: 80,
+          key: 'id',
           render: (h, params) => {
-            return h('router-link', { props: { to: '/category/racks/' + params.row.id } }, params.row.id)
+            return h('router-link', { props: { to: '/category/rack/' + params.row.id } }, params.row.id)
           }
         },
         {
@@ -232,27 +227,28 @@ export default {
               }, '删除')
             ])
           }
-        },
+        }
       ],
       total: 1,
       getParams: {
         page: 1,
         pagesize: 10,
-        search: '',
+        search: ''
       },
       getMaxParams: {
         page: 1,
         pagesize: 1000,
-        search: '',
+        search: ''
       }
     }
   },
-  created() {
+  created () {
     this.handleGetList()
     this.handleGetListIdcs()
+    this.handleGetListRegion()
   },
   methods: {
-    handleGetList() {
+    handleGetList () {
       GetRackList(this.getParams)
         .then(
           res => {
@@ -261,7 +257,7 @@ export default {
           }
         )
     },
-    handleGetListIdcs() {
+    handleGetListIdcs () {
       GetIdcList(this.getMaxParams)
         .then(
           res => {
@@ -269,15 +265,23 @@ export default {
           }
         )
     },
-    pageChange(page) {
+    handleGetListRegion () {
+      GetRegionList(this.getMaxParams)
+        .then(
+          res => {
+            this.regionList = res.data.results
+          }
+        )
+    },
+    pageChange (page) {
       this.getParams.page = page
       this.handleGetList()
     },
-    sizeChange(size) {
+    sizeChange (size) {
       this.getParams.pagesize = size
       this.handleGetList()
     },
-    handleCreate() {
+    handleCreate () {
       this.$refs.createForm.validate((valid) => {
         if (!valid) {
           return
@@ -288,11 +292,11 @@ export default {
             res => {
               this.handleGetList()
               alertWarning('create', this.$Notice, data.name)
-            },
+            }
           )
       })
     },
-    handleUpdate() {
+    handleUpdate () {
       this.$refs.updateForm.validate((valid) => {
         if (!valid) {
           return
@@ -308,7 +312,7 @@ export default {
           )
       })
     },
-    handleDelete() {
+    handleDelete () {
       let id = this.deleteData.id
       DeleteRack(id)
         .then(res => {
@@ -316,9 +320,9 @@ export default {
           alertWarning('delete', this.$Notice, id)
         })
     },
-    cancel() {
-      Message.info('操作取消');
+    cancel () {
+      Message.info('操作取消')
     }
-  },
+  }
 }
 </script>

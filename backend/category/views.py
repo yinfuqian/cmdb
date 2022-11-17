@@ -34,7 +34,7 @@ class RackViewSet(BaseView):
     """
     queryset = Rack.objects.all()
     serializer_class = RackSerializer
-    search_fields = ['name', 'ssh_ip']
+    search_fields = ['name', 'address']
 
 
 class ServerViewSet(BaseView):

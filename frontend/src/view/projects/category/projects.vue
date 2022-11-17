@@ -172,7 +172,7 @@
 <script>
   import '@/static/base.css'
   import copyright from '@/view/components/public/copyright.vue'
-  import {Button, Table, Modal, Message, Tag} from 'iview';
+  import {Button, Table, Modal, Message, Tag} from 'iview'
   import {GetProjectList, CreateProject, UpdateProject, DeleteProject} from '@/api/category/projects'
   import {GetUserList} from '@/api/account/users'
   import {GetBusinessLineList} from '@/api/category/businesslines'
@@ -490,7 +490,7 @@
       },
 
       cancel () {
-        Message.info('Clicked cancel');
+        Message.info('操作取消')
       }
 
     },
