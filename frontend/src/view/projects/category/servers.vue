@@ -243,7 +243,7 @@ export default {
         },
         {
           title: '负责人',
-          key: 'usersname'
+          key: 'usernames'
         },
 
         {

@@ -2,8 +2,9 @@
 from rest_framework import serializers
 
 from category.ssh.ssh_operation import SSHOperation
-
+import json
 from .models import *
+from jsonsearch import JsonSearch
 from account.models import User
 
 class IdcSerializer(serializers.ModelSerializer):
@@ -70,17 +71,24 @@ class ServerSerializer(serializers.ModelSerializer):
         ret['idc'] = idc
         ret['idc_name'] = idc_name
         ret['users'] = instance.users.values('id', 'username')
+        #ret['usernames'] = instance.users.values('username')
+        usernames = instance.users.values("id","username")
+        l = []
+        for a in usernames:
+            l.append(a)
+        js = json.dumps({"value": l}, ensure_ascii=False)
+        jsondata = JsonSearch(object=js, mode='s')
 
-        ret['usersname'] = instance.users.values('username')
+        username_json = jsondata.search_all_value(key="username")
+        usernames = tuple(username_json)
 
-
-
+        ret["usernames"] = usernames
         ret['ssh_user'] = {'id': instance.ssh_user.pk, 'name': instance.ssh_user.name} if instance.ssh_user else {'id': None, 'name': None}
         ret['projects'] = instance.project_set.values('id', 'name')
         region = instance.region
         ret['region_name'] = region.name if region else None
         ret['rack_name'] = rack_name
-
+        
         print(ret)
         return ret
 

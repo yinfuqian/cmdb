@@ -111,11 +111,11 @@
 <script>
 import '@/static/base.css'
 import copyright from '@/view/components/public/copyright.vue'
-import {GetProject} from '@/api/category/projects'
+import { GetProject } from '@/api/category/projects'
 
 export default {
 
-  components: {copyright},
+  components: { copyright },
 
   created () {
     this.handleGetDetail()
@@ -123,8 +123,8 @@ export default {
 
   data () {
     return {
-      row:{},
-      columnsBusinessLineList:[
+      row: {},
+      columnsBusinessLineList: [
         {
           title: 'ID',
           key: 'id',
@@ -135,7 +135,7 @@ export default {
           key: 'name'
         }
       ],
-      columnsUserList:[
+      columnsUserList: [
         {
           title: 'ID',
           key: 'id',
@@ -151,7 +151,7 @@ export default {
           title: 'ID',
           width: 80,
           render: (h, params) => {
-            return h('router-link', {props:{to:'/category/servers/'+params.row.id}}, params.row.id)
+            return h('router-link', { props: { to: '/category/servers/' + params.row.id } }, params.row.id)
           }
         },
         {

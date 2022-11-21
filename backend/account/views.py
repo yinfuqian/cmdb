@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from utils.baseviews import BaseView
 from utils.permissions import IsSuperUser
 from utils.unitaryauth import UnitaryAuth
-from utils.wrappers import permission_admin
+#from utils.wrappers import permission_admin
 
 from .serializers import *
 
@@ -42,13 +42,13 @@ class UserViewSet(BaseView):
         # 有额外字段，所以绕开了默认的序列化、save那一套；不然的话额外字段会被删除。下同:
         serializer.update(self.get_object(), self.request.data)
 
-    @permission_admin
-    def perform_create(self, serializer):
-        serializer.create(self.request.data)
+    # @permission_admin
+    # def perform_create(self, serializer):
+    #     serializer.create(self.request.data)
 
-    @permission_admin
-    def perform_destroy(self, instance):
-        instance.delete()
+    # @permission_admin
+    # def perform_destroy(self, instance):
+    #     instance.delete()
 
 
 class UnitaryAuthView(UnitaryAuth, APIView):

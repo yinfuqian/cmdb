@@ -1,9 +1,10 @@
 <template>
   <div>
     <Row :gutter="20">
-      <i-col :xs="12" :md="8" :lg="6" v-for="(infor, i) in inforCardData" :key="`infor-${i}`" style="height: 120px;padding-bottom: 10px;">
+      <i-col :xs="12" :md="8" :lg="6" v-for="(infor, i) in inforCardData" :key="`infor-${i}`"
+        style="height: 120px;padding-bottom: 10px;">
         <infor-card shadow :color="infor.color" :icon="infor.icon" :icon-size="36">
-          <count-to :end="infor.count" count-class="count-style"/>
+          <count-to :end="infor.count" count-class="count-style" />
           <p>{{ infor.title }}</p>
         </infor-card>
       </i-col>
@@ -16,15 +17,15 @@
       </i-col>
       <i-col :md="24" :lg="16" style="margin-bottom: 20px;">
         <Card shadow>
-          <chart-bar v-if="flag" style="height: 300px;" :value="barData" text="每周用户活跃量"/>
+          <chart-bar v-if="flag" style="height: 300px;" :value="barData" text="每周用户活跃量" />
         </Card>
       </i-col>
     </Row>
-    <Row>
+    <!-- <Row>
       <Card shadow>
-        <example style="height: 310px;"/>
+        <example style="height: 310px;" />
       </Card>
-    </Row>
+    </Row> -->
   </div>
 </template>
 
@@ -33,7 +34,7 @@ import InforCard from '_c/info-card'
 import CountTo from '_c/count-to'
 import { ChartPie, ChartBar } from '_c/charts'
 //import Example from './example.vue'
-import {GetDashBoardData} from '@/api/dashboard/dashboard_data'
+import { GetDashBoardData } from '@/api/dashboard/dashboard_data'
 
 
 export default {
@@ -43,9 +44,9 @@ export default {
     CountTo,
     ChartPie,
     ChartBar,
-   // Example
+    // Example
   },
-  data () {
+  data() {
     return {
       flag: false,
       info_map: {
@@ -82,8 +83,8 @@ export default {
           let data = res.data.data
           this.pieData = []
           let pie = data.pie
-          for (let i of pie){
-            let item = {value: i.value, name:i.name}
+          for (let i of pie) {
+            let item = { value: i.value, name: i.name }
             this.pieData.push(item)
           }
           let info = data.info
@@ -103,7 +104,7 @@ export default {
 </script>
 
 <style lang="less">
-.count-style{
+.count-style {
   font-size: 50px;
 }
 </style>
